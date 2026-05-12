@@ -1,4 +1,5 @@
 /*
+
  * Licensed to The Apereo Foundation under one or more contributor license
  * agreements. See the NOTICE file distributed with this work for
  * additional information regarding copyright ownership.
@@ -29,7 +30,7 @@ import org.unitime.timetable.model.Class_;
 import org.unitime.timetable.model.SubjectArea;
 import org.unitime.timetable.model.comparators.ClassCourseComparator;
 import org.unitime.timetable.util.Constants;
-
+import org.unitime.timetable.util.Day;
 
 /**
  * @author Stephanie Schluttenhofer, Tomas Muller
@@ -48,13 +49,14 @@ public class ClassAssignmentsReportForm implements UniTimeForm, ClassListFormInt
 	private String filterAssignedRoom;
 	private String filterManager;
 	private String filterIType;
-	private boolean filterAssignedTimeMon;
-	private boolean filterAssignedTimeTue;
-	private boolean filterAssignedTimeWed;
-	private boolean filterAssignedTimeThu;
-	private boolean filterAssignedTimeFri;
-	private boolean filterAssignedTimeSat;
-	private boolean filterAssignedTimeSun;
+//	private boolean filterAssignedTimeMon;
+//	private boolean filterAssignedTimeTue;
+//	private boolean filterAssignedTimeWed;
+//	private boolean filterAssignedTimeThu;
+//	private boolean filterAssignedTimeFri;
+//	private boolean filterAssignedTimeSat;
+//	private boolean filterAssignedTimeSun;
+private boolean[] filterAssignedDays = new boolean[7];
 	private String filterAssignedTimeHour;
 	private String filterAssignedTimeMin;
 	private String filterAssignedTimeAmPm;
@@ -126,13 +128,14 @@ public class ClassAssignmentsReportForm implements UniTimeForm, ClassListFormInt
 		filterIType = "";
 		sortByKeepSubparts = false;
 		
-		filterAssignedTimeMon = false;
-		filterAssignedTimeTue = false;
-		filterAssignedTimeWed = false;
-		filterAssignedTimeThu = false;
-		filterAssignedTimeFri = false;
-		filterAssignedTimeSat = false;
-		filterAssignedTimeSun = false;
+//		filterAssignedTimeMon = false;
+//		filterAssignedTimeTue = false;
+//		filterAssignedTimeWed = false;
+//		filterAssignedTimeThu = false;
+//		filterAssignedTimeFri = false;
+//		filterAssignedTimeSat = false;
+//		filterAssignedTimeSun = false;
+		this.filterAssignedDays = new boolean[7];
 		filterAssignedTimeHour = "";
 		filterAssignedTimeMin = "";
 		filterAssignedTimeAmPm = "";
@@ -173,7 +176,13 @@ public class ClassAssignmentsReportForm implements UniTimeForm, ClassListFormInt
     	if (subjectAreaIds == null || subjectAreaIds.length == 0)
     		action.addFieldError("subjectAreaIds", MSG.errorSubjectRequired());
     }
-    
+	public boolean getFilterAssignedDay(Day day) {
+		return filterAssignedDays[day.ordinal()];
+	}
+
+	public void setFilterAssignedDay(Day day, boolean value) {
+		filterAssignedDays[day.ordinal()] = value;
+	}
 	public String getSortBy() { return sortBy; }
 	public void setSortBy(String sortBy) { this.sortBy = sortBy; }
 	public String[] getSortByOptions() { return ClassCourseComparator.getNames(); }
@@ -193,20 +202,55 @@ public class ClassAssignmentsReportForm implements UniTimeForm, ClassListFormInt
 	public String getFilterIType() { return filterIType; }
 	public void setFilterIType(String filterIType) { this.filterIType = filterIType; }
 
-	public boolean getFilterAssignedTimeMon() { return filterAssignedTimeMon; }
-	public void setFilterAssignedTimeMon(boolean filterAssignedTimeMon) { this.filterAssignedTimeMon = filterAssignedTimeMon; }
-	public boolean getFilterAssignedTimeTue() { return filterAssignedTimeTue; }
-	public void setFilterAssignedTimeTue(boolean filterAssignedTimeTue) { this.filterAssignedTimeTue = filterAssignedTimeTue; }
-	public boolean getFilterAssignedTimeWed() { return filterAssignedTimeWed; }
-	public void setFilterAssignedTimeWed(boolean filterAssignedTimeWed) { this.filterAssignedTimeWed = filterAssignedTimeWed; }
-	public boolean getFilterAssignedTimeThu() { return filterAssignedTimeThu; }
-	public void setFilterAssignedTimeThu(boolean filterAssignedTimeThu) { this.filterAssignedTimeThu = filterAssignedTimeThu; }
-	public boolean getFilterAssignedTimeFri() { return filterAssignedTimeFri; }
-	public void setFilterAssignedTimeFri(boolean filterAssignedTimeFri) { this.filterAssignedTimeFri = filterAssignedTimeFri; }
-	public boolean getFilterAssignedTimeSat() { return filterAssignedTimeSat; }
-	public void setFilterAssignedTimeSat(boolean filterAssignedTimeSat) { this.filterAssignedTimeSat = filterAssignedTimeSat; }
-	public boolean getFilterAssignedTimeSun() { return filterAssignedTimeSun; }
-	public void setFilterAssignedTimeSun(boolean filterAssignedTimeSun) { this.filterAssignedTimeSun = filterAssignedTimeSun; }
+	public boolean getFilterAssignedTimeMon() {
+		return getFilterAssignedDay(Day.MON);
+	}
+
+	public void setFilterAssignedTimeMon(boolean value) {
+		setFilterAssignedDay(Day.MON, value);
+	}
+	public boolean getFilterAssignedTimeTue() {
+		return getFilterAssignedDay(Day.TUE);
+	}
+
+	public void setFilterAssignedTimeTue(boolean value) {
+		setFilterAssignedDay(Day.TUE, value);
+	}
+	public boolean getFilterAssignedTimeWed() {
+		return getFilterAssignedDay(Day.WED);
+	}
+
+	public void setFilterAssignedTimeWed(boolean value) {
+		setFilterAssignedDay(Day.WED, value);
+	}
+	public boolean getFilterAssignedTimeThu() {
+		return getFilterAssignedDay(Day.THU);
+	}
+
+	public void setFilterAssignedTimeThu(boolean value) {
+		setFilterAssignedDay(Day.THU, value);
+	}
+	public boolean getFilterAssignedTimeFri() {
+		return getFilterAssignedDay(Day.FRI);
+	}
+
+	public void setFilterAssignedTimeFri(boolean value) {
+		setFilterAssignedDay(Day.FRI, value);
+	}
+	public boolean getFilterAssignedTimeSat() {
+		return getFilterAssignedDay(Day.SAT);
+	}
+
+	public void setFilterAssignedTimeSat(boolean value) {
+		setFilterAssignedDay(Day.SAT, value);
+	}
+	public boolean getFilterAssignedTimeSun() {
+		return getFilterAssignedDay(Day.SUN);
+	}
+
+	public void setFilterAssignedTimeSun(boolean value) {
+		setFilterAssignedDay(Day.SUN, value);
+	}
 	public String getFilterAssignedTimeHour() { return filterAssignedTimeHour; }
 	public void setFilterAssignedTimeHour(String filterAssignedTimeHour) { this.filterAssignedTimeHour = filterAssignedTimeHour; }
 	public String getFilterAssignedTimeMin() { return filterAssignedTimeMin; }
@@ -232,42 +276,26 @@ public class ClassAssignmentsReportForm implements UniTimeForm, ClassListFormInt
 			ret[i] = String.valueOf(5*i);
 		return ret;
 	}
-	
+
 	public int getFilterDayCode() {
 		int dayCode = 0;
-		if (filterAssignedTimeMon)
-			dayCode += Constants.DAY_CODES[Constants.DAY_MON];
-		if (filterAssignedTimeTue)
-			dayCode += Constants.DAY_CODES[Constants.DAY_TUE];
-		if (filterAssignedTimeWed)
-			dayCode += Constants.DAY_CODES[Constants.DAY_WED];
-		if (filterAssignedTimeThu)
-			dayCode += Constants.DAY_CODES[Constants.DAY_THU];
-		if (filterAssignedTimeFri)
-			dayCode += Constants.DAY_CODES[Constants.DAY_FRI];
-		if (filterAssignedTimeSat)
-			dayCode += Constants.DAY_CODES[Constants.DAY_SAT];
-		if (filterAssignedTimeSun)
-			dayCode += Constants.DAY_CODES[Constants.DAY_SUN];
+
+		for (Day day : Day.values()) {
+			if (getFilterAssignedDay(day)) {
+				dayCode += Constants.DAY_CODES[day.ordinal()];
+			}
+		}
+
 		return dayCode;
 	}
 	public void setFilterDayCode(int dayCode) {
-		if (dayCode>=0) {
-			filterAssignedTimeMon = (dayCode & Constants.DAY_CODES[Constants.DAY_MON]) != 0;
-			filterAssignedTimeTue = (dayCode & Constants.DAY_CODES[Constants.DAY_TUE]) != 0;
-			filterAssignedTimeWed = (dayCode & Constants.DAY_CODES[Constants.DAY_WED]) != 0;
-			filterAssignedTimeThu = (dayCode & Constants.DAY_CODES[Constants.DAY_THU]) != 0;
-			filterAssignedTimeFri = (dayCode & Constants.DAY_CODES[Constants.DAY_FRI]) != 0;
-			filterAssignedTimeSat = (dayCode & Constants.DAY_CODES[Constants.DAY_SAT]) != 0;
-			filterAssignedTimeSun = (dayCode & Constants.DAY_CODES[Constants.DAY_SUN]) != 0;
-		} else {
-			filterAssignedTimeMon = false;
-			filterAssignedTimeTue = false;
-			filterAssignedTimeWed = false;
-			filterAssignedTimeThu = false;
-			filterAssignedTimeFri = false;
-			filterAssignedTimeSat = false;
-			filterAssignedTimeSun = false;
+		for (Day day : Day.values()) {
+			if (dayCode >= 0) {
+				setFilterAssignedDay(day,
+						(dayCode & Constants.DAY_CODES[day.ordinal()]) != 0);
+			} else {
+				setFilterAssignedDay(day, false);
+			}
 		}
 	}
 	public int getFilterStartSlot() {

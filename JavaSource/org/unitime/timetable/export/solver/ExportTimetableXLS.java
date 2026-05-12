@@ -1079,7 +1079,13 @@ public class ExportTimetableXLS extends TableExporter {
 			boolean thinTop = false, thinLeft = false, thinBottom = false, thinRight = false;
 			boolean thickTop = false, thickLeft = false, thickBottom = false, thickRight = false;
 			if (parent != null && parent.isStyle("meeting")) {
-				if (dy == 0 & p.isStyle("header")) thickTop = true;
+
+			//proplem here
+				//if (dy == 0 & p.isStyle("header")) thickTop = true;
+				//after
+				boolean isHeader = p.isStyle("header");
+				if (dy == 0 && isHeader) thickTop = true;
+
 				if (dx == 0) thickLeft = true;
 				if (dy == p.getHeight() - 1 && p.isStyle("footer")) thickBottom = true;
 				if (dx == p.getWidth() - 1) thickRight = true;
